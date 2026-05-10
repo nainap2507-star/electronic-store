@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,16 +127,11 @@ MEDIA_ROOT = BASE_DIR / 'nts_app/media'
 
 LOGIN_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# STATICFILES_DIRS = [
-#     BASE_DIR / "es_app/static",
-# ]
+
 RAZORPAY_KEY_ID = 'rzp_test_ytoQRUzHn3jtXL'
 RAZORPAY_KEY_SECRET = 'Sc3eDMyJEuNfGzcf5r5eWiLz'
 
 ALLOWED_HOSTS = ['*']
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
