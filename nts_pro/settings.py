@@ -135,3 +135,10 @@ RAZORPAY_KEY_SECRET = 'Sc3eDMyJEuNfGzcf5r5eWiLz'
 ALLOWED_HOSTS = ['*']
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'nts_app/static',
+]
