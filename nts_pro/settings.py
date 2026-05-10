@@ -132,6 +132,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 RAZORPAY_KEY_ID = 'rzp_test_ytoQRUzHn3jtXL'
 RAZORPAY_KEY_SECRET = 'Sc3eDMyJEuNfGzcf5r5eWiLz'
 
-ALLOWED_HOSTS = ['codenp.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
