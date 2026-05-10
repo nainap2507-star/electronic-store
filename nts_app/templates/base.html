@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>N Tech Store</title>
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+    <!-- 🔥 Tumhara External CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        <a href="/">
+            <img src="{% static 'assets/images/img_3.png' %}" alt="Logo">
+        </a>
+    </div>
+
+    <nav class="nav-links">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+
+        <div class="nav-item dropdown-wrapper">
+            <a href="/products/" class="dropdown-trigger {% if '/products' in request.path %}active{% endif %}">
+                Product <i class="fa fa-angle-down"></i>
+            </a>
+
+            <div class="common-dropdown">
+                <ul>
+                    {% for category in categories %}
+                        <li>
+                            <a href="{% url 'product_by_category' category.id %}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% empty %}
+                        <li>
+                            <a href="#">No Categories</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <a href="/about/" class="{% if '/about' in request.path %}active{% endif %}">About Us</a>
+        <a href="/contact/" class="{% if '/contact' in request.path %}active{% endif %}">Contact</a>
+    </nav>
+
+    <div class="right-section">
+        <a href="/cart/"><i class="fa fa-shopping-cart icon"></i></a>
+        <a href="/wishlist/"><i class="fa fa-heart icon"></i></a>
+
+        <div class="profile dropdown-wrapper">
+            <div class="dropdown-trigger">
+                <i class="fa fa-user icon"></i>
+                <i class="fa fa-angle-down"></i>
+            </div>
+
+            <div class="common-dropdown" style="left:auto; right:0; min-width:180px;">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="/profile/">My Profile</a></li>
+                        <li><a href="/orders/">Orders</a></li>
+                        <li><a href="/logout/" style="color:red;">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login/">Login</a></li>
+                        <li><a href="/register/">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <i class="fa fa-bars menu-toggle" onclick="toggleMenu()"></i>
+    </div>
+
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/products/">Product</a>
+    <a href="/about/">About Us</a>
+    <a href="/contact/">Contact</a>
+
+    {% if user.is_authenticated %}
+        <a href="/orders/">Orders</a>
+        <a href="/logout/">Logout</a>
+    {% else %}
+        <a href="/login/">Login</a>
+        <a href="/register/">Register</a>
+    {% endif %}
+</div>
+
+{% block content %}
+{% endblock %}
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-col">
+            <h3>About Us</h3>
+            <p style="font-size:14px; color:#555;">
+                We provide best products with amazing quality and fast delivery.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <a href="/">Home</a>
+            <a href="/products/">Products</a>
+            <a href="/cart/">Cart</a>
+            <a href="/contact/">Contact</a>
+        </div>
+
+        <div class="footer-col">
+            <h3>Account</h3>
+            {% if user.is_authenticated %}
+                <a href="#">My Profile</a>
+                <a href="/orders/">My Orders</a>
+                <a href="/logout/">Logout</a>
+            {% else %}
+                <a href="/login/">Login</a>
+                <a href="/register/">Register</a>
+            {% endif %}
+        </div>
+
+        <div class="footer-col">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#">🌐</a>
+                <a href="#">📘</a>
+                <a href="#">📸</a>
+                <a href="#">🐦</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 N Tech Store | All Rights Reserved
+    </div>
+
+</footer>
+
+<script>
+function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

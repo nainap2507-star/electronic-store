@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.profile-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    padding: 30px;
+    border-radius: 12px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.profile-header h2 {
+    margin: 0;
+}
+
+.profile-box {
+    background: #fff;
+    margin-top: 20px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.profile-info p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.logout-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #ff4d4d;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #e60000;
+}
+
+/* Orders */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.orders-table th, .orders-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.orders-table th {
+    background: #f5f5f5;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.pending { background: orange; }
+.completed { background: green; }
+.cancelled { background: red; }
+
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: gray;
+}
+</style>
+
+<div class="profile-container">
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+        <img src="{% static 'assets/images/user.png' %}" alt="user">
+        <div>
+            <h2>{{ request.user.username }}</h2>
+            <p>{{ request.user.email }}</p>
+        </div>
+    </div>
+
+    <!-- PROFILE DETAILS -->
+    <div class="profile-box">
+        <h3>👤 Profile Details</h3>
+
+        <div class="profile-info">
+            <p><b>Username:</b> {{ request.user.username }}</p>
+            <p><b>Email:</b> {{ request.user.email }}</p>
+        </div>
+
+        <a href="{% url 'logout' %}">
+            <button class="logout-btn">🚪 Logout</button>
+        </a>
+    </div>
+
+    <!-- ORDER HISTORY -->
+    <div class="profile-box">
+        <h3>🛒 My Orders</h3>
+
+        {% if orders %}
+        <table class="orders-table">
+            <tr>
+                <th>Order ID</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>₹ {{ order.total_price }}</td>
+                <td>
+                    <span class="status 
+                        {% if order.status == 'Pending' %}pending
+                        {% elif order.status == 'Completed' %}completed
+                        {% else %}cancelled
+                        {% endif %}
+                    ">
+                        {{ order.status }}
+                    </span>
+                </td>
+                <td>{{ order.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% else %}
+        <div class="empty">
+            😔 No orders yet
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

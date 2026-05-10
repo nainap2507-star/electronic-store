@@ -1,0 +1,421 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .checkout-page {
+        background: #f8f9fb;
+        padding: 60px 0;
+        min-height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .checkout-wrapper {
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .checkout-box {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .billing-box {
+        flex: 2;
+    }
+
+    .summary-box {
+        flex: 1;
+        position: sticky;
+        top: 20px;
+        border-top: 4px solid #dc3545;
+    }
+
+    .checkout-title {
+        font-size: 30px;
+        font-weight: 700;
+        color: #dc3545;
+        margin-bottom: 25px;
+    }
+
+    .summary-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        outline: none;
+        transition: 0.3s;
+        font-size: 15px;
+        background: #fff;
+    }
+
+    .form-control:focus {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+    }
+
+    textarea.form-control {
+        resize: none;
+        min-height: 110px;
+    }
+
+    .payment-label {
+        display: block;
+        font-weight: 700;
+        color: #333;
+        margin: 18px 0 12px;
+    }
+
+    .payment-options {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .payment-card {
+        flex: 1;
+        min-width: 140px;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 14px 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        background: #fafafa;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .payment-card:hover {
+        border-color: #dc3545;
+        background: #fff5f6;
+    }
+
+    .payment-card input[type="radio"] {
+        accent-color: #dc3545;
+        transform: scale(1.1);
+    }
+
+    .upi-field {
+        display: none;
+        margin-top: 10px;
+    }
+
+    .place-order-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(45deg, #dc3545, #ff4d5a);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+    .place-order-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(220, 53, 69, 0.25);
+    }
+
+    .summary-item {
+        display: flex;
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .summary-item:last-of-type {
+        border-bottom: none;
+    }
+
+    .summary-item img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #eee;
+        background: #fff;
+    }
+
+    .summary-item-details {
+        flex: 1;
+    }
+
+    .summary-item-details h5 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .summary-item-details p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .summary-total {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 2px solid #f1f1f1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 700;
+        color: #222;
+    }
+
+    .summary-total span {
+        color: #dc3545;
+    }
+
+    .secure-note {
+        margin-top: 18px;
+        padding: 12px 14px;
+        background: #fff5f6;
+        border-left: 4px solid #dc3545;
+        border-radius: 8px;
+        color: #555;
+        font-size: 14px;
+    }
+
+    @media (max-width: 992px) {
+        .checkout-wrapper {
+            flex-direction: column;
+        }
+
+        .summary-box {
+            position: static;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .checkout-page {
+            padding: 40px 0;
+        }
+
+        .checkout-box {
+            padding: 20px;
+        }
+
+        .checkout-title {
+            font-size: 26px;
+        }
+
+        .summary-title {
+            font-size: 22px;
+        }
+
+        .payment-options {
+            flex-direction: column;
+        }
+
+        .payment-card {
+            width: 100%;
+        }
+    }
+</style>
+
+<section class="checkout-page">
+    <div class="checkout-wrapper">
+
+        <!-- BILLING DETAILS -->
+        <div class="checkout-box billing-box">
+            <h2 class="checkout-title">
+                <i class="fas fa-file-invoice"></i> Billing Details
+            </h2>
+
+            <form method="POST" id="paymentForm">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="fullname" class="form-control" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="text" name="phone" class="form-control" placeholder="Enter mobile number" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-control" placeholder="Enter your full address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">City</label>
+                    <input type="text" name="city" class="form-control" placeholder="Enter your city" required>
+                </div>
+
+                <label class="payment-label">
+                    <i class="fas fa-credit-card"></i> Payment Method
+                </label>
+
+                <div class="payment-options">
+                    <label class="payment-card">
+                        <input type="radio" name="payment_method" value="cod" checked>
+                        <span><i class="fas fa-money-bill-wave"></i> Cash on Delivery</span>
+                    </label>
+
+                     <label class="payment-card">
+                        <input type="radio" name="payment_method" value="razorpay">
+                        <span><i class="fas fa-mobile-alt"></i> Online Payment</span>
+                        </label>
+                    </div>
+
+
+                <div class="upi-field" id="upi-wrapper">
+                    <div class="form-group">
+                        <label class="form-label">UPI ID</label>
+                        <input type="text" name="upi_id" id="upi-field" class="form-control" placeholder="example@upi">
+                    </div>
+                </div>
+                <script>
+                let onlineRadio = document.querySelector('input[value="razorpay"]');
+                onlineRadio.addEventListener("change", function(){
+                    document.getElementById("upi-box").style.display = "block";
+                });
+                </script>
+
+                <button id="place-order-btn" class="btn btn-danger w-100">
+                    <i class="fas fa-check-circle"></i> Place Order
+                </button>
+            </form>
+        </div>
+
+        <!-- ORDER SUMMARY -->
+        <div class="checkout-box summary-box">
+            <h3 class="summary-title">
+                <i class="fas fa-shopping-bag"></i> Order Summary
+            </h3>
+
+            {% for item in cart_items %}
+            <div class="summary-item">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+
+                <div class="summary-item-details">
+                    <h5>{{ item.product.name }}</h5>
+                    <p>Price: ₹ {{ item.product.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <p><strong>Subtotal:</strong> ₹ {{ item.total }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="summary-total">
+                <div>Total</div>
+                <div><span>₹ {{ total_price }}</span></div>
+            </div>
+
+            <div class="secure-note">
+                <i class="fas fa-shield-alt"></i> Your order details are secure and your payment method is protected.
+            </div>
+        </div>
+
+    </div>
+</section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const paymentForm = document.getElementById('paymentForm');
+    const upiWrapper = document.getElementById("upi-wrapper");
+    const upiField = document.getElementById("upi-field");
+
+    function toggleUPI() {
+        const selected = document.querySelector('input[name="payment_method"]:checked');
+
+        if (selected && selected.value === "razorpay") {
+            upiWrapper.style.display = "block";
+            upiField.required = false;
+        } else {
+            upiWrapper.style.display = "none";
+            upiField.required = false;
+            upiField.value = "";
+        }
+    }
+
+    document.querySelectorAll('input[name="payment_method"]').forEach(input => {
+        input.addEventListener('change', toggleUPI);
+    });
+
+    toggleUPI();
+
+    paymentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+        if (paymentMethod === 'razorpay') {
+            const options = {
+                key: "{{ razorpay_key }}",
+                amount: "{{ amount_in_paise }}",
+                currency: "{{ currency }}",
+                name: "N Tech Store",
+                description: "Order Payment",
+                order_id: "{{ razorpay_order_id }}",
+
+                handler: function(response) {
+                    document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                    paymentForm.submit();
+                },
+
+                prefill: {
+                    name: "{{ request.user.username }}",
+                    email: "{{ request.user.email }}",
+                    contact: ""
+                },
+
+                theme: {
+                    color: "#e03737"
+                }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+
+        } else {
+            paymentForm.submit();
+        }
+    });
+});
+</script>
+{% endblock %}

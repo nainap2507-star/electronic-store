@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .cart-page {
+        background: #f8f9fb;
+        padding: 60px 0;
+        min-height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .cart-wrapper {
+        width: 90%;
+        max-width: 1150px;
+        margin: auto;
+    }
+
+    .cart-heading {
+        font-size: 32px;
+        font-weight: 700;
+        color: #dc3545;
+        margin-bottom: 25px;
+    }
+
+    .cart-box {
+        background: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        padding: 30px;
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px 0;
+        border-bottom: 1px solid #ececec;
+        transition: 0.3s;
+    }
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+    .cart-item:hover {
+        background: #fafafa;
+        border-radius: 12px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .cart-item-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex: 2;
+    }
+
+    .cart-item img {
+        width: 95px;
+        height: 95px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 1px solid #eee;
+        background: #fff;
+    }
+
+    .item-info h4 {
+        margin: 0 0 8px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .item-info p {
+        margin: 4px 0;
+        color: #666;
+        font-size: 15px;
+    }
+
+    .cart-item-right {
+        text-align: right;
+        min-width: 180px;
+    }
+
+    .item-total {
+        font-size: 18px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 14px;
+    }
+
+    .remove-btn {
+        display: inline-block;
+        background: #dc3545;
+        color: #fff;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+        border: none;
+    }
+
+    .remove-btn:hover {
+        background: #bb2d3b;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .cart-summary {
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 2px solid #f1f1f1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .total-price {
+        font-size: 24px;
+        font-weight: 700;
+        color: #111;
+    }
+
+    .total-price span {
+        color: #dc3545;
+    }
+
+    .checkout-btn {
+        display: inline-block;
+        background: #dc3545;
+        color: #fff;
+        text-decoration: none;
+        padding: 13px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .checkout-btn:hover {
+        background: #bb2d3b;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .continue-btn {
+        display: inline-block;
+        background: #212529;
+        color: #fff;
+        text-decoration: none;
+        padding: 13px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: 0.3s;
+        margin-right: 10px;
+    }
+
+    .continue-btn:hover {
+        background: #000;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-cart-icon {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+
+    .empty-cart h3 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .empty-cart p {
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .shop-btn {
+        display: inline-block;
+        background: #dc3545;
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 22px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .shop-btn:hover {
+        background: #bb2d3b;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .cart-item-left {
+            width: 100%;
+        }
+
+        .cart-item-right {
+            width: 100%;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .cart-summary {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .cart-heading {
+            font-size: 26px;
+        }
+
+        .item-info h4 {
+            font-size: 18px;
+        }
+
+        .total-price {
+            font-size: 22px;
+        }
+    }
+</style>
+
+<section class="cart-page">
+    <div class="cart-wrapper">
+
+        <h2 class="cart-heading">
+            <i class="fas fa-shopping-cart"></i> My Cart
+        </h2>
+
+        <div class="cart-box">
+
+            {% if cart_items %}
+
+                {% for item in cart_items %}
+                <div class="cart-item">
+
+                    <div class="cart-item-left">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+
+                        <div class="item-info">
+                            <h4>{{ item.product.name }}</h4>
+                            <p><strong>Price:</strong> ₹ {{ item.product.price }}</p>
+                            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-right">
+                        <div class="item-total">₹ {{ item.total }}</div>
+
+                        <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </a>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+                <div class="cart-summary">
+                    <div class="total-price">
+                        Total Price: <span>₹ {{ total_price }}</span>
+                    </div>
+
+                    <div>
+                        <a href="/" class="continue-btn">
+                            <i class="fas fa-arrow-left"></i> Continue Shopping
+                        </a>
+
+                        <a href="/checkout/" class="checkout-btn">
+                            <i class="fas fa-credit-card"></i> Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+
+            {% else %}
+
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">🛒</div>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you haven’t added anything to your cart yet.</p>
+                    <a href="/" class="shop-btn">
+                        <i class="fas fa-shopping-bag"></i> Start Shopping
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

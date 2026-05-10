@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .success-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8f9fb, #fff5f5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .success-card {
+        background: #ffffff;
+        max-width: 650px;
+        width: 100%;
+        text-align: center;
+        padding: 50px 35px;
+        border-radius: 22px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .success-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, #dc3545, #ff6b6b);
+    }
+
+    .success-icon {
+        width: 95px;
+        height: 95px;
+        margin: 0 auto 25px;
+        border-radius: 50%;
+        background: #eafaf1;
+        color: #28a745;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.15);
+    }
+
+    .success-title {
+        font-size: 34px;
+        font-weight: 700;
+        color: #28a745;
+        margin-bottom: 14px;
+    }
+
+    .success-text {
+        font-size: 17px;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 28px;
+    }
+
+    .success-info {
+        background: #fff5f6;
+        border: 1px solid #ffe0e3;
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 30px;
+        color: #555;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .success-btn {
+        display: inline-block;
+        background: #dc3545;
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .success-btn:hover {
+        background: #bb2d3b;
+        color: #fff;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+    .success-btn i {
+        margin-right: 8px;
+    }
+
+    @media (max-width: 576px) {
+        .success-card {
+            padding: 35px 22px;
+        }
+
+        .success-title {
+            font-size: 28px;
+        }
+
+        .success-text {
+            font-size: 15px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            font-size: 34px;
+        }
+    }
+</style>
+
+<section class="success-page">
+    <div class="success-card">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h2 class="success-title">Order Placed Successfully!</h2>
+
+        <p class="success-text">
+            Thank you for shopping with us. Your order has been placed successfully and will be processed soon.
+        </p>
+
+        <div class="success-info">
+            We’ve received your order details. You can continue shopping and explore more amazing products from our store.
+        </div>
+
+        <a href="{% url 'home' %}" class="success-btn">
+            <i class="fas fa-shopping-bag"></i> Continue Shopping
+        </a>
+    </div>
+</section>
+
+{% endblock %}

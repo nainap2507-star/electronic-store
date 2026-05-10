@@ -1,0 +1,798 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 100px;
+            height: 85px;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .logo img {
+            height: 150px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            height: 100%;
+        }
+
+        .nav-links a {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #222;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: #e10600;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .right-section {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icon {
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .icon:hover {
+            color: #e10600;
+        }
+
+        /* COMMON DROPDOWN FOR PRODUCT + PROFILE */
+        .dropdown-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dropdown-trigger {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #222;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .dropdown-trigger::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: #e10600;
+            transition: width 0.3s ease;
+        }
+
+        .dropdown-trigger:hover::after,
+        .dropdown-trigger.active::after {
+            width: 100%;
+        }
+
+        .common-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+            padding: 8px 0;
+        }
+
+        .dropdown-wrapper:hover .common-dropdown {
+            display: block;
+        }
+
+        .common-dropdown ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .common-dropdown li {
+            list-style: none;
+        }
+
+        .common-dropdown li a {
+            display: block;
+            padding: 10px 15px;
+            color: #222;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .common-dropdown li a:hover {
+            background: #fff0f0;
+            color: #e10600;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 85px;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.10);
+            z-index: 999;
+        }
+
+        .mobile-menu a {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .mobile-menu a:hover {
+            background: #fff0f0;
+            color: #e10600;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .footer {
+            background: #f9f9f9;
+            color: #333;
+            padding: 40px 20px 20px;
+            margin-top: 50px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-col {
+            width: 220px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 15px;
+            color: #e10600;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #555;
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .footer-col a:hover {
+            color: #e10600;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .social-icons a {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .social-icons a:hover {
+            color: #e10600;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+                height: 85px;
+            }
+
+            .logo {
+                height: 85px;
+            }
+
+            .logo img {
+                height: 110px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .mobile-menu {
+                top: 85px;
+            }
+        }
+        .nts-home {
+        background: #fff;
+        color: #222;
+        overflow-x: hidden;
+    }
+
+    .nts-home * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .nts-hero {
+        position: relative;
+        min-height: 560px;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, rgba(225,6,0,0.92), rgba(255,255,255,0.1)),
+                    url("{% static 'assets/images/home2/banner-2.jpg' %}") center/cover no-repeat;
+    }
+
+    .nts-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.18);
+    }
+
+    .nts-hero .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .nts-hero-content {
+        max-width: 620px;
+        color: #fff;
+        animation: fadeUp 1s ease;
+    }
+
+    .nts-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.18);
+        border: 1px solid rgba(255,255,255,0.25);
+        color: #fff;
+        padding: 10px 18px;
+        border-radius: 40px;
+        font-size: 14px;
+        margin-bottom: 18px;
+        backdrop-filter: blur(6px);
+    }
+
+    .nts-hero-content h1 {
+        font-size: 54px;
+        line-height: 1.15;
+        font-weight: 800;
+        margin-bottom: 18px;
+    }
+
+    .nts-hero-content p {
+        font-size: 18px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        color: #f8f8f8;
+    }
+
+    .nts-btns {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .nts-btn {
+        display: inline-block;
+        padding: 14px 28px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .nts-btn-primary {
+        background: #fff;
+        color: #e10600;
+    }
+
+    .nts-btn-primary:hover {
+        background: #ffe9e8;
+        color: #c40000;
+        transform: translateY(-3px);
+    }
+
+    .nts-btn-outline {
+        border: 2px solid #fff;
+        color: #fff;
+    }
+
+    .nts-btn-outline:hover {
+        background: #fff;
+        color: #e10600;
+        transform: translateY(-3px);
+    }
+
+    .nts-features {
+        margin-top: -55px;
+        position: relative;
+        z-index: 5;
+    }
+
+    .nts-feature-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 28px 22px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        text-align: center;
+        height: 100%;
+        transition: 0.3s ease;
+        border-top: 4px solid #e10600;
+    }
+
+    .nts-feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 14px 35px rgba(225,6,0,0.12);
+    }
+
+    .nts-feature-icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: #fff1f1;
+        color: #e10600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        font-size: 30px;
+    }
+
+    .nts-feature-card h4 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .nts-feature-card p {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .nts-section {
+        padding: 80px 0;
+    }
+
+    .nts-section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .nts-section-title h2 {
+        font-size: 38px;
+        font-weight: 800;
+        color: #111;
+        margin-bottom: 12px;
+    }
+
+    .nts-section-title h2 span {
+        color: #e10600;
+    }
+
+    .nts-section-title p {
+        max-width: 700px;
+        margin: 0 auto;
+        color: #666;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .nts-category-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+        transition: 0.3s ease;
+        height: 100%;
+    }
+
+    .nts-category-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 14px 28px rgba(225,6,0,0.10);
+    }
+
+    .nts-category-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .nts-category-info {
+        padding: 22px;
+        text-align: center;
+    }
+
+    .nts-category-info h4 {
+        font-size: 22px;
+        margin-bottom: 8px;
+        font-weight: 700;
+    }
+
+    .nts-category-info p {
+        color: #666;
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    .nts-link {
+        color: #e10600;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .nts-link:hover {
+        color: #b80000;
+    }
+
+    .nts-product-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        transition: 0.3s ease;
+        height: 100%;
+        border: 1px solid #f3f3f3;
+    }
+
+    .nts-product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 34px rgba(225,6,0,0.10);
+    }
+
+    .nts-product-image {
+        position: relative;
+        overflow: hidden;
+        background: #fff7f7;
+    }
+
+    .nts-product-image img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        transition: 0.4s ease;
+    }
+
+    .nts-product-card:hover .nts-product-image img {
+        transform: scale(1.06);
+    }
+
+    .nts-sale-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: #e10600;
+        color: #fff;
+        font-size: 13px;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .nts-product-info {
+        padding: 22px;
+        text-align: center;
+    }
+
+    .nts-product-info h4 {
+        font-size: 19px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .nts-product-info p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.7;
+        min-height: 45px;
+    }
+
+    .nts-price {
+        margin: 14px 0 18px;
+        font-size: 21px;
+        font-weight: 800;
+        color: #e10600;
+    }
+
+    .nts-price del {
+        color: #999;
+        font-size: 15px;
+        margin-left: 8px;
+        font-weight: 500;
+    }
+
+    .nts-product-btn {
+        display: inline-block;
+        background: #e10600;
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .nts-product-btn:hover {
+        background: #b80000;
+        color: #fff;
+    }
+
+    .nts-banner {
+        background: linear-gradient(135deg, #fff5f5, #ffffff);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+    }
+
+    .nts-banner-content {
+        padding: 55px 45px;
+    }
+
+    .nts-banner-content span {
+        display: inline-block;
+        color: #e10600;
+        font-weight: 700;
+        margin-bottom: 12px;
+        font-size: 15px;
+    }
+
+    .nts-banner-content h3 {
+        font-size: 38px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+        font-weight: 800;
+    }
+
+    .nts-banner-content p {
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 24px;
+        font-size: 16px;
+    }
+
+    .nts-banner-image img {
+        width: 100%;
+        height: 100%;
+        min-height: 350px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .nts-about-strip {
+        background: #e10600;
+        color: #fff;
+        border-radius: 24px;
+        padding: 55px 35px;
+        text-align: center;
+    }
+
+    .nts-about-strip h3 {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+
+    .nts-about-strip p {
+        max-width: 850px;
+        margin: 0 auto 25px;
+        line-height: 1.9;
+        font-size: 16px;
+        color: #fff7f7;
+    }
+
+    .nts-stats {
+        padding-top: 20px;
+    }
+
+    .nts-stat-box {
+        text-align: center;
+        padding: 15px 10px;
+    }
+
+    .nts-stat-box h4 {
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .nts-stat-box p {
+        margin: 0;
+        font-size: 15px;
+        color: #fbe5e5;
+    }
+
+    .nts-newsletter {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+        padding: 45px 35px;
+        text-align: center;
+    }
+
+    .nts-newsletter h3 {
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .nts-newsletter p {
+        color: #666;
+        max-width: 650px;
+        margin: 0 auto 25px;
+        line-height: 1.8;
+    }
+
+    .nts-newsletter-form {
+        max-width: 650px;
+        margin: 0 auto;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nts-newsletter-form input {
+        flex: 1;
+        min-width: 240px;
+        height: 54px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 0 18px;
+        outline: none;
+    }
+
+    .nts-newsletter-form button {
+        height: 54px;
+        padding: 0 28px;
+        border: none;
+        background: #e10600;
+        color: #fff;
+        border-radius: 10px;
+        font-weight: 700;
+        transition: 0.3s ease;
+    }
+
+    .nts-newsletter-form button:hover {
+        background: #b80000;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(35px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 991px) {
+        .nts-hero {
+            min-height: 500px;
+        }
+
+        .nts-hero-content h1 {
+            font-size: 42px;
+        }
+
+        .nts-banner-content {
+            padding: 35px 25px;
+        }
+
+        .nts-banner-content h3 {
+            font-size: 30px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .nts-hero {
+            min-height: 460px;
+            text-align: center;
+        }
+
+        .nts-hero-content {
+            margin: 0 auto;
+        }
+
+        .nts-btns {
+            justify-content: center;
+        }
+
+        .nts-section {
+            padding: 60px 0;
+        }
+
+        .nts-section-title h2,
+        .nts-about-strip h3,
+        .nts-newsletter h3 {
+            font-size: 28px;
+        }
+
+        .nts-hero-content h1 {
+            font-size: 34px;
+        }
+    }

@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.product-detail-section {
+    padding: 60px 0;
+    background: #f8f9fa;
+}
+
+/* MAIN CARD */
+.product-card-main {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 30px;
+}
+
+/* IMAGE */
+.product-image-box {
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    background: #fafafa;
+}
+
+.product-image-box img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+}
+
+/* DETAILS */
+.product-info-box h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.product-meta {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 28px;
+    color: #dc3545;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.product-description {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* QTY */
+.qty-input {
+    width: 100px;
+    height: 45px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+/* BUTTONS */
+.btn-custom {
+    background: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-right: 10px;
+}
+
+.btn-custom:hover {
+    background: #bb2d3b;
+    color: #fff;
+}
+
+/* RELATED */
+.related-title {
+    text-align: center;
+    margin: 50px 0 25px;
+    font-weight: bold;
+}
+
+.related-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.related-card:hover {
+    transform: translateY(-5px);
+}
+
+.related-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+}
+
+.view-btn {
+    background: black;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.view-btn:hover {
+    background: #333;
+}
+</style>
+
+<section class="product-detail-section">
+<div class="container">
+
+<div class="product-card-main">
+<div class="row">
+
+<!-- IMAGE -->
+<div class="col-md-6">
+    <div class="product-image-box">
+        <img src="{{ product.image.url }}">
+    </div>
+</div>
+
+<!-- DETAILS -->
+<div class="col-md-6 product-info-box">
+
+    <h2>{{ product.name }}</h2>
+
+    <p class="product-meta"><b>Brand:</b> {{ product.brand }}</p>
+    <p class="product-meta"><b>Storage:</b> {{ product.storage }}</p>
+
+    <div class="product-price">₹ {{ product.price }}</div>
+
+    <p class="product-description">{{ product.description }}</p>
+
+    <!-- ADD TO CART -->
+    <form action="{% url 'add_to_cart' product.id %}" method="post">
+        {% csrf_token %}
+        <input type="number" name="quantity" value="1" min="1" required class="qty-input"><br>
+
+        <button type="submit" class="btn btn-custom">
+            <i class="fas fa-cart-plus"></i> Add to Cart
+        </button>
+    </form>
+
+    <br>
+
+    <!-- WISHLIST -->
+    <form action="{% url 'add_to_wishlist' product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-custom">
+            <i class="fas fa-heart"></i> Wishlist
+        </button>
+    </form>
+
+</div>
+
+</div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<h3 class="related-title">Related Products</h3>
+
+<div class="row">
+{% for p in related_products %}
+
+<div class="col-md-3 mb-4">
+    <div class="related-card">
+        <img src="{{ p.image.url }}">
+        <h5>{{ p.name }}</h5>
+        <p>₹ {{ p.price }}</p>
+        <a href="{% url 'product_detail' p.id %}" class="view-btn">View</a>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+
+</div>
+</section>
+
+{% endblock %}
