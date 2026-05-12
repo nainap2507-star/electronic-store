@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.template.context_processors import request
-
+import razorpay
 from .models import Product, Order, OrderItem, Category, Cart, CartItem, Wishlist
 
 

@@ -131,10 +131,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 RAZORPAY_KEY_ID = 'rzp_test_ytoQRUzHn3jtXL'
 RAZORPAY_KEY_SECRET = 'Sc3eDMyJEuNfGzcf5r5eWiLz'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','.onrender.com', 'localhost', '127.0.0.1']
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'nts_app/static',
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
